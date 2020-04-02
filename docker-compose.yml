@@ -1,0 +1,44 @@
+version: "3.3"
+
+services:
+
+    mpd:
+        image: piradio_mpd
+        ports:
+            - "6600:6600"
+            - "8800:8800" 
+        volumes:
+            - ${MUSIC_DIR}:/local/music
+            - ${PLAYLIST_DIR}:/local/playlists
+            - ${MPD_DB_DIR}:/var/lib/mpd
+        devices:
+            - /dev/snd
+        restart: unless-stopped
+        environment:
+            - .env
+
+        
+    db:
+        image: arm32v6/postgres
+        volumes:
+            - dbdata:/var/lib/postgresql/data
+        environment:
+            - .env
+            
+    web:
+        image: piradio_web
+        environment:
+            - .env
+    
+    
+    nginx:
+        image: arm32v6/nginx
+        environment:
+            - .env
+
+
+
+
+
+volumes:
+    dbdata:
