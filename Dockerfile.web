@@ -2,12 +2,11 @@
 
 FROM arm32v6/alpine:3.11.5
 
-COPY qemu-arm-static /usr/bin/qemu-arm-static
 
 ENV LC_ALL=en_US.UTF-8
 
 RUN apk update && apk upgrade && \ 
-    apk add bash mpc python3 python3-dev postgresql-dev alsa-utils npm
+    apk add bash mpc python3 python3-dev postgresql-dev alsa-utils npm gcc musl-dev linux-headers
 
 RUN mkdir /code
 WORKDIR /code
@@ -17,7 +16,15 @@ RUN npm install --global coffeescript sass
 RUN pip3 install --upgrade pip setuptools
 RUN pip3 install -r /code/requirements.txt
 
-
 ADD code /code
+
+COPY files/web/run_service.sh /usr/local/bin
+RUN chmod 755 /usr/local/bin/run_service.sh
+
+RUN mkdir -p /etc/uwsgi/vassals
+COPY files/web/uwsgi.ini /etc/uwsgi
+COPY files/web/piradio.ini /etc/uwsgi/vassals
+
+
 
 CMD ["/bin/bash"]

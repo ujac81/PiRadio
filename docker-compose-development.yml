@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+
+    mpd:
+        volumes:
+            - /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static
+        
+    db:
+        volumes:
+            - dbdata:/var/lib/postgresql/data
+            - /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static
+           
+    web:
+        image: piradio_web
+        environment:
+            - DEBUG=1
+        volumes:
+            - /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static    
+    
+    nginx:
+        volumes:
+            - /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static    
+            

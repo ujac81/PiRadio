@@ -3,12 +3,11 @@ all: image
 
 
 image:
-	cp /usr/bin/qemu-arm-static .
 	docker build --force-rm --rm --tag piradio_mpd --file Dockerfile.mpd .
 	docker build --force-rm --rm --tag piradio_web --file Dockerfile.web .
 	
 clean:
-	rm -f ./qemu-arm-static piradio.tgz
+	rm -f piradio.tgz
 	docker rmi piradio_mpd
 	docker rmi piradio_web
 	docker image prune -f

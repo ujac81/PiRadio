@@ -1,3 +1,4 @@
+
 version: "3.3"
 
 services:
@@ -29,16 +30,38 @@ services:
         image: piradio_web
         environment:
             - .env
+            - PYTHON_PATH=/code
+            - POSTGRES_SERVICE=db
+            - POSTGRES_PORT=5432
+        depends_on:
+            - db
+            - mpd
+        volumes:
+            - wwwsocket:/tmp/simweb
+            # store log files externally
+            - log:/var/log/uwsgi
+            - ./code:/code
+        working_dir: /code
+        
+
     
     
     nginx:
         image: arm32v6/nginx
         environment:
             - .env
-
-
-
-
+        depends_on:
+            - web
+        ports:
+            - 80:80
+        volumes:
+            - ./files/nginx:/etc/nginx/conf.d
 
 volumes:
+    # Keep SQL database
     dbdata:
+    # place unix socker for access nginx->uwsgi(django) here
+    wwwsocket:
+    # some error logs
+    log:
+
