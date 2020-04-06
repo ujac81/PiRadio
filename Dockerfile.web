@@ -6,7 +6,11 @@ FROM arm32v6/alpine:3.11.5
 ENV LC_ALL=en_US.UTF-8
 
 RUN apk update && apk upgrade && \ 
-    apk add bash mpc python3 python3-dev postgresql-dev alsa-utils npm gcc musl-dev linux-headers
+    apk add bash mpc python3 python3-dev postgresql-dev alsa-utils npm gcc musl-dev linux-headers \
+        python3-dev build-base linux-headers pcre-dev libc-dev musl memcached libmemcached-dev zlib-dev \
+        make libffi-dev libxslt-dev libxml2 libxml2-dev py3-lxml
+        
+        
 
 RUN mkdir /code
 WORKDIR /code
@@ -27,4 +31,10 @@ COPY files/web/piradio.ini /etc/uwsgi/vassals
 
 
 
-CMD ["/bin/bash"]
+CMD ["/usr/local/bin/run_service.sh"]
+
+#RUN pip install uwsgi==2.0.18 && pip install -e . && python manage.py collectstatic --noinput
+
+#EXPOSE 8000
+
+#CMD ["uwsgi", "--ini", "uwsgi.ini"]

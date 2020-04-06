@@ -14,5 +14,5 @@ clean:
 
 
 save:
-	docker image save --output piradio.tgz piradio_mpd piradio_web piradio_nginx
+	docker image save --output piradio.tgz piradio_mpd piradio_web
 

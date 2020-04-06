@@ -7,7 +7,7 @@ services:
         image: piradio_mpd
         ports:
             - "6600:6600"
-            - "8800:8800" 
+            #- "8800:8800"
         volumes:
             - ${MUSIC_DIR}:/local/music
             - ${PLAYLIST_DIR}:/local/playlists
@@ -15,21 +15,22 @@ services:
         devices:
             - /dev/snd
         restart: unless-stopped
-        environment:
+        env_file:
             - .env
 
         
     db:
-        image: arm32v6/postgres
+        image: arm32v6/postgres:12.2-alpine
         volumes:
             - dbdata:/var/lib/postgresql/data
-        environment:
+        env_file:
             - .env
             
     web:
         image: piradio_web
-        environment:
+        env_file:
             - .env
+        environment:
             - PYTHON_PATH=/code
             - POSTGRES_SERVICE=db
             - POSTGRES_PORT=5432
@@ -47,8 +48,8 @@ services:
     
     
     nginx:
-        image: arm32v6/nginx
-        environment:
+        image: arm32v6/nginx:1.17-alpine
+        env_file:
             - .env
         depends_on:
             - web
