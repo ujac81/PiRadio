@@ -26,7 +26,7 @@ COPY files/web/run_service.sh /usr/local/bin
 RUN chmod 755 /usr/local/bin/run_service.sh
 
 
-COPY files/web/uwsgi.ini /etc/uwsgi
+COPY files/web/uwsgi.ini /etc/uwsgi/uwsgi.ini
 
 CMD ["/usr/local/bin/run_service.sh"]
 

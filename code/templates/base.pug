@@ -16,16 +16,14 @@ html(lang="en")
         title
             | PiRadio
         - compress css
-        // link(type='text/x-sass', rel='stylesheet', href='{% static "css/application.sass" %}', charset='utf-8')
+        link(rel='stylesheet', href='{% static "vendor/bootstrap-4.4.1/css/bootstrap.min.css" %}')
+        link(type='text/x-sass', rel='stylesheet', href='{% static "css/application.sass" %}', charset='utf-8')
         - endcompress
+        // link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh", crossorigin="anonymous")
         - compress js
         //- vendor java script sources first
-        // script(src="{% static 'vendor/jquery/js/jquery-3.3.1.min.js' %}")
-        // script(src="{% static 'vendor/bootstrap/js/popper.min.js' %}")
-        // script(src="{% static 'vendor/bootstrap/js/bootstrap-4.3.1.min.js' %}")
-        // script(src="{% static 'vendor/d3/d3-5.9.1.min.js' %}")
-        // script(src="{% static 'vendor/plotly/plotly-1.44.4.min.js' %}")
-        // script(src="{% static 'vendor/pako/pako_inflate-1.0.10.min.js' %}")
+        script(src="{% static 'vendor/jquery/jquery-3.4.1.min.js' %}")
+        script(src="{% static 'vendor/bootstrap-4.4.1/js/bootstrap.min.js' %}")
         //- SimWeb sources: global first, then all others
         // script(type='text/coffeescript', charset='utf-8', src="{% static 'js/global.coffee' %}")
         // script(type='text/coffeescript', charset='utf-8', src="{% static 'js/decompress.coffee' %}")
