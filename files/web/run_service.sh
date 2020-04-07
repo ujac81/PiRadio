@@ -8,6 +8,7 @@ if [ "x$DEBUG" = "x1" ]; then
     echo "Starting in DEBUG mode...."
     cd /code
     python3 manage.py migrate
+    python3 manage.py collectstatic --no-input
     python3 manage.py runserver 0.0.0.0:8000
     
 else
