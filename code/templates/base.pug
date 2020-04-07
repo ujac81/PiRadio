@@ -1,0 +1,39 @@
+//- templates/base.pug -- base HTML template for SimWEB application
+
+    This HTML template uses pug (former jade) language --> https://pugjs.org .
+    Requires pypugjs template loader in piradio/settings.py.
+    Requires pypugjs python package via requirements.txt.
+
+- load compress
+// - load static from staticfiles
+- load static
+!!!5
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="Cache-control", content="no-cache")
+        meta(http-equiv="Expires", content="-1")
+        title
+            | PiRadio
+        - compress css
+        // link(type='text/x-sass', rel='stylesheet', href='{% static "css/application.sass" %}', charset='utf-8')
+        - endcompress
+        - compress js
+        //- vendor java script sources first
+        // script(src="{% static 'vendor/jquery/js/jquery-3.3.1.min.js' %}")
+        // script(src="{% static 'vendor/bootstrap/js/popper.min.js' %}")
+        // script(src="{% static 'vendor/bootstrap/js/bootstrap-4.3.1.min.js' %}")
+        // script(src="{% static 'vendor/d3/d3-5.9.1.min.js' %}")
+        // script(src="{% static 'vendor/plotly/plotly-1.44.4.min.js' %}")
+        // script(src="{% static 'vendor/pako/pako_inflate-1.0.10.min.js' %}")
+        //- SimWeb sources: global first, then all others
+        // script(type='text/coffeescript', charset='utf-8', src="{% static 'js/global.coffee' %}")
+        // script(type='text/coffeescript', charset='utf-8', src="{% static 'js/decompress.coffee' %}")
+        // script(type='text/coffeescript', charset='utf-8', src="{% static 'js/simdata.coffee' %}")
+        //- SimWeb sources: load application last, contains document.ready function
+        // script(type='text/coffeescript', charset='utf-8', src="{% static 'js/application.coffee' %}")
+        - endcompress
+    body.base(class="#{body_class}")
+        - csrf_token
+        block content
+ 
