@@ -16,8 +16,12 @@ make
 ```
 
 ## Run
-Start up docker-compose with development override:
+Create environment
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose-development.yml
-
+cp .env.example .env
 ```
+and edit to appropriate settings. Start up docker-compose with development override:
+```bash
+docker-compose -f docker-compose.yml -f docker-compose-development.yml up web
+```
+open http://localhost:8000 to see result.

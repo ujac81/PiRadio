@@ -18,6 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = bool(os.environ.get('DEBUG', False))
+PRODUCTION = not DEBUG
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -49,7 +51,7 @@ ROOT_URLCONF = 'piradio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
@@ -147,6 +149,9 @@ STATICFILES_FINDERS = (
 )
 
 
+COMPRESS_URL = '/static/'
+COMPRESS_ENABLED = PRODUCTION
+COMPRESS_OFFLINE = PRODUCTION
 
 
 COMPRESS_PRECOMPILERS = (

@@ -18,4 +18,14 @@ git pull
 
 ## Check Environment
 ```bash
-cp .env.ex
+cp .env.example .env
+```
+and change to your local settings.
+
+
+## Remote-Build
+On your developer machine run
+```bash
+make image save
+scp piremote.tgz pi@RASPBERRY_NAME:~
+```

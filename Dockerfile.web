@@ -25,16 +25,13 @@ ADD code /code
 COPY files/web/run_service.sh /usr/local/bin
 RUN chmod 755 /usr/local/bin/run_service.sh
 
-RUN mkdir -p /etc/uwsgi/vassals
+
 COPY files/web/uwsgi.ini /etc/uwsgi
-COPY files/web/piradio.ini /etc/uwsgi/vassals
-
-
 
 CMD ["/usr/local/bin/run_service.sh"]
 
 #RUN pip install uwsgi==2.0.18 && pip install -e . && python manage.py collectstatic --noinput
 
-#EXPOSE 8000
+EXPOSE 8000
 
 #CMD ["uwsgi", "--ini", "uwsgi.ini"]
