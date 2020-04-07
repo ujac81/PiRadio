@@ -5,4 +5,8 @@ qemu-arm-static
 __pycache__/*
 *.pyc
 
+code/static/*
+
+
+
 
