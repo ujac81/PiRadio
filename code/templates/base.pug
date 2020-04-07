@@ -16,7 +16,7 @@ html(lang="en")
         title
             | PiRadio
         - compress css
-        link(rel='stylesheet', href='{% static "vendor/bootstrap-4.4.1/css/bootstrap.min.css" %}')
+        // link(rel='stylesheet', href='{% static "vendor/bootstrap-4.4.1/css/bootstrap.min.css" %}')
         link(type='text/x-sass', rel='stylesheet', href='{% static "css/application.sass" %}', charset='utf-8')
         - endcompress
         // link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh", crossorigin="anonymous")
@@ -31,7 +31,7 @@ html(lang="en")
         //- SimWeb sources: load application last, contains document.ready function
         // script(type='text/coffeescript', charset='utf-8', src="{% static 'js/application.coffee' %}")
         - endcompress
-    body.base(class="#{body_class}")
+    body.base
         - csrf_token
         block content
  

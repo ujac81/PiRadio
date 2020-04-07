@@ -4,9 +4,13 @@
 extends 'base.pug'
 block content
 
-    .main
-        button.btn.btn-primary(type="button") Radio
-        button.btn.btn-primary(type="button") Music
-        button.btn.btn-primary(type="button") Power off
+    .text-center.row.h-100.w-100
+        .col.align-self-center
+            .m-3.mt-0
+                a.main.btn.btn-lg.btn-primary(type="button", href='#') Radio
+            .m-3
+                a.main.btn.btn-lg.btn-primary(type="button", href='#') Music
+            .m-3.mb-5
+                a.main.btn.btn-lg.btn-danger(type="button", href='#') Power off
     
  

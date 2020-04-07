@@ -4,6 +4,7 @@ version: "3.3"
 services:
 
     mpd:
+        hostname: mpd
         image: piradio_mpd
         ports:
             - "6600:6600"
@@ -39,13 +40,15 @@ services:
         depends_on:
             - db
             - mpd
+        devices:
+            - /dev/snd
         volumes:
             - wwwsocket:/tmp/piradio
             # store log files externally
             - log:/var/log/uwsgi
             # This might be removed in "real" production run.
             # For testing, this might be better as you won't need to run docker build the whole time.
-            - ./code:/code
+            # - ./code:/code
             - static:/code/static
         working_dir: /code
         ports:
