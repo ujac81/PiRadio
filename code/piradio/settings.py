@@ -170,8 +170,17 @@ COMPRESS_PRECOMPILERS = (
     ('text/foobar', 'path.to.MyPrecompilerFilter'),
 )
 
+COMPRESS_FILTERS = {
+    'css':
+        ['compressor.filters.css_default.CssAbsoluteFilter',
+         'compressor.filters.yuglify.YUglifyJSFilter',
+         ],
+    'js':
+        ['compressor.filters.jsmin.JSMinFilter',
+         'compressor.filters.yuglify.YUglifyCSSFilter',
+         ],
+}
+
 from pypugjs.ext.django.compiler import enable_pug_translations
 
 enable_pug_translations()
-
-

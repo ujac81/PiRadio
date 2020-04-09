@@ -34,12 +34,6 @@ services:
         image: piradio_web
         env_file:
             - .env
-        environment:
-            - PYTHON_PATH=/code
-            - POSTGRES_SERVICE=db
-            - POSTGRES_PORT=5432
-            - MPD_HOST=mpd
-            - MPD_PORT=6600
         depends_on:
             - db
             - mpd
@@ -49,10 +43,6 @@ services:
             - wwwsocket:/tmp/piradio
             # store log files externally
             - log:/var/log/uwsgi
-            # This might be removed in "real" production run.
-            # For testing, this might be better as you won't need to run docker build the whole time.
-            - ./code:/code
-            - static:/code/static
         working_dir: /code
         ports:
             # This is for debugging.
@@ -63,13 +53,10 @@ services:
             # for testing.
             - "8000:8000"
         restart: unless-stopped
-        
-
-    
     
     nginx:
         hostname: piradio
-        image: arm32v6/nginx:1.17-alpine
+        image: piradio_nginx
         env_file:
             - .env
         depends_on:
@@ -77,9 +64,7 @@ services:
         ports:
             - "80:80"
         volumes:
-            - ./files/nginx/piradio.conf:/etc/nginx/conf.d/default.conf
             - wwwsocket:/tmp/piradio
-            - static:/code/static
         restart: unless-stopped
         
 volumes:
@@ -89,5 +74,3 @@ volumes:
     wwwsocket:
     # some error logs
     log:
-    # static files
-    static:
