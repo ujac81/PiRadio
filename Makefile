@@ -22,4 +22,9 @@ save:
 
 
 deploy:
-    scp piradio.tgz pi@$(PI_HOST):~
+	scp piradio.tgz pi@$(PI_HOST):~
+
+
+load:
+    docker load --input ~/piradio.tgz
+    docker image prune -f

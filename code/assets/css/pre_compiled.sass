@@ -1,0 +1,13 @@
+// pre_compiled.sass -- pre-compile vendor sass/scss files for faster run during development.
+// use
+//    sass pre_compiled.sass pre_compiled.css
+// to compile this file and avoid compilation for every reload during development.
+
+$spacer: 2rem
+@import "../vendor/bootstrap-4.4.1/scss/bootstrap.scss"
+
+$fa-font-path: "../vendor/fontawesome-free-5.13.0/webfonts"
+@import "../vendor/fontawesome-free-5.13.0/scss/fontawesome.scss"
+@import "../vendor/fontawesome-free-5.13.0/scss/solid.scss"
+@import "../vendor/fontawesome-free-5.13.0/scss/brands.scss"
+

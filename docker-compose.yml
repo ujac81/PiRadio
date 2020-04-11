@@ -43,6 +43,7 @@ services:
             - wwwsocket:/tmp/piradio
             # store log files externally
             - log:/var/log/uwsgi
+            - ./code:/code
         working_dir: /code
         ports:
             # This is for debugging.

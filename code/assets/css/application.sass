@@ -1,14 +1,4 @@
 
-
-$spacer: 2rem
-@import "../vendor/bootstrap-4.4.1/scss/bootstrap.scss"
-
-$fa-font-path: "../vendor/fontawesome-free-5.13.0/webfonts"
-@import "../vendor/fontawesome-free-5.13.0/scss/fontawesome.scss"
-@import "../vendor/fontawesome-free-5.13.0/scss/solid.scss"
-@import "../vendor/fontawesome-free-5.13.0/scss/brands.scss"
-
-
 html, body
     height: 100%
     
@@ -23,11 +13,12 @@ a.main
     bottom: 0
     width: 100%
     height: 9rem
-    display: block
+    display: flex
 
     .row
-        // flex-grow: 0
+        display: flex
+        width: 100%
         .col
-            // flex-grow: 0
+            flex-grow: 1
             a
                 font-size: 6rem
