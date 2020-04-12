@@ -26,5 +26,5 @@ deploy:
 
 
 load:
-    docker load --input ~/piradio.tgz
-    docker image prune -f
+	docker load --input ~/piradio.tgz
+	docker image prune -f
