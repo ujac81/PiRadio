@@ -26,6 +26,7 @@ html(lang="en")
         //- PiRadio sources: global first, then all others
         script(type='text/coffeescript', charset='utf-8', src="{% static 'js/global.coffee' %}")
         script(type='text/coffeescript', charset='utf-8', src="{% static 'js/ajax.coffee' %}")
+        script(type='text/coffeescript', charset='utf-8', src="{% static 'js/base.coffee' %}")
         //- PiRadio sources: load application last, contains document.ready function
         script(type='text/coffeescript', charset='utf-8', src="{% static 'js/application.coffee' %}")
         - endcompress
@@ -40,13 +41,13 @@ html(lang="en")
                     a(href='/main')
                         i.fas.fa-home.text-light
                 .col.p-0.text-center
-                    i.fas.fa-play.text-light.footer-button(data-item='play')
-                    i.fas.fa-pause.text-light.footer-button(data-item='pause')
+                    i.fas.fa-play.text-light.footer-button(data-item='playpause', data-button='play')
+                    i.fas.fa-pause.text-light.footer-button(data-item='playpause', data-button='pause')
                 .col.p-0.text-center
                     i.fas.fa-step-forward.text-light.footer-button(data-item='next')
                 .col.p-0.text-center
-                    i.fas.fa-volume-down.text-light.footer-button(data-item='vol-down')
+                    i.fas.fa-volume-down.text-light.footer-button(data-item='decvol')
                 .col.p-0.text-center
-                    i.fas.fa-volume-up.text-light.footer-button(data-item='vol-up')
+                    i.fas.fa-volume-up.text-light.footer-button(data-item='incvol')
 
 

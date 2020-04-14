@@ -2,7 +2,13 @@
 
 """
 
+import logging
+import os
+import time
+
 from mpd import MPDClient, ConnectionError, CommandError, ProtocolError
+
+from .helpers import *
 
 
 class MPC:
@@ -22,10 +28,204 @@ class MPC:
         self.reconnect()
 
     def reconnect(self):
-        pass
+        logging.info('MPD reconnecting...')
+
+        self.connected = False
+        self.error = False
+
+        try:
+            self.client.disconnect()
+        except (ConnectionError, BrokenPipeError, ValueError):
+            pass
+
+        for i in range(5):
+            try:
+                self.client.connect(os.environ.get('MPD_HOST'), int(os.environ.get('MPD_PORT')))
+                self.connected = True
+            except (ConnectionError, BrokenPipeError, ValueError):
+                time.sleep(0.1)
+            if self.connected:
+                logging.info('MPD reconnected.')
+                return True
+
+        self.error = True
+        logging.error('reconnect() [FAIL!]')
+        return False
+
+    def ensure_connected(self):
+        """Make sure we are connected."""
+        # Abuse get_status() method which tries to connect up to 5 times.
+        self.get_status()
+
+    def get_status(self):
+        """Get status dict from mpd.
+        If connection error occurred, try to reconnect max 5 times.
+
+        :return: {'audio': '44100:24:2',
+                 'bitrate': '320',
+                 'consume': '0',
+                 'elapsed': '10.203',
+                 'mixrampdb': '0.000000',
+                 'mixrampdelay': 'nan',
+                 'nextsong': '55',
+                 'nextsongid': '55',
+                 'playlist': '2',
+                 'playlistlength': '123',
+                 'random': '1',
+                 'repeat': '1',
+                 'single': '0',
+                 'song': '58',
+                 'songid': '58',
+                 'state': 'pause',
+                 'time': '10:191',
+                 'volume': '40',
+                 'xfade': '0'}
+
+        :return: MPDClient.status()
+        """
+        res = {'error_str': self.error}
+        for i in range(5):
+            try:
+                res = self.client.status()
+            except (ConnectionError, CommandError, ProtocolError, BrokenPipeError, ValueError):
+                self.reconnect()
+        res['error_str'] = self.error
+        return res
+
+    def get_status_int(self, key, dflt=0):
+        """Fetch value from mpd status dict as int,
+        fallback to dflt if no such key.
+        NOTE: Won't catch failed conversions.
+        """
+        stat = self.get_status()
+        if key in stat:
+            return int(stat[key])
+        return dflt
+
+    def volume(self):
+        """Current volume as int in [0,100]"""
+        return self.get_status_int('volume')
+
+    def change_volume(self, amount):
+        """Add amount to current volume int [-100, +100]"""
+        self.set_volume(self.volume() + amount)
+
+    def set_volume(self, setvol):
+        """Set current volume as int in [0,100]"""
+        self.ensure_connected()
+        vol = setvol
+        if vol < 0:
+            vol = 0
+        if vol > 100:
+            vol = 100
+        try:
+            self.client.setvol(vol)
+        except CommandError:
+            pass
+        return self.volume()
+
+    def get_currentsong(self):
+        """Fetch current song dict from mpd.
+        Force reconnect if failed.
+
+        :return: {'album': 'Litany',
+                 'albumartist': 'Vader',
+                 'artist': 'Vader',
+                 'date': '2000',
+                 'file': 'local/Extreme_Metal/Vader - Litany - 01 - Wings.mp3',
+                 'genre': 'Death Metal',
+                 'id': '58',
+                 'last-modified': '2014-12-10T20:00:58Z',
+                 'pos': '58',
+                 'time': '191',
+                 'title': 'Wings',
+                 'track': '1'}
+        """
+        self.ensure_connected()
+        res = self.client.currentsong()
+        if len(res) == 0:
+            res = {'album': '', 'artist': '', 'title': 'Not Playing!', 'time': 0, 'file': ''}
+        return res
+
+    def get_status_data(self):
+        """Combined currentsong / status data for AJAX GET or POST on index page
+
+        :return: see generate_status_data()
+        """
+        status = self.get_status()
+        current = self.get_currentsong()
+        return self.generate_status_data(status, current)
+
+    @staticmethod
+    def generate_status_data(status, current):
+        """Combined currentsong / status data
+
+        :return: {title: xxx
+                  time: seconds
+                  album: xxx
+                  artist: xxx
+                  date: yyyy
+                  id: N
+                  elapsed: seconds
+                  random: bool
+                  repeat: bool
+                  volume: percentage
+                  state: ['playing', 'stopped', 'paused']
+                  playlist: VERSION-NUMBER
+                  playlistlength: N
+                  file: local/Mp3/...../file.mp3
+                  }
+        """
+        data = {}
+        if len(current) == 0:
+            current = {'album': '', 'artist': '', 'title': 'Not Playing!', 'time': 0, 'file': ''}
+        data['title'] = save_item(current, 'title')
+        data['time'] = current['time'] if 'time' in current else 0
+        for key in ['album', 'artist', 'date', 'id', 'file']:
+            data[key] = save_item(current, key)
+        for key in ['elapsed', 'random', 'repeat', 'volume', 'state', 'playlist', 'playlistlength']:
+            data[key] = status[key] if key in status else '0'
+        return data
 
     def cmd(self, data):
+        success = True
         err_msg = ''
-        print(data)
-        res = dict(cmd='hallo', status=True, err_msg=err_msg)
-        return res
+        cmd = data.get('cmd', None)
+        self.ensure_connected()
+        try:
+            if cmd == 'back':
+                self.client.previous()
+            elif cmd == 'playpause':
+                status = self.get_status()
+                if status['state'] == 'play':
+                    self.client.pause()
+                else:
+                    self.client.play()
+            elif cmd == 'stop':
+                self.client.stop()
+            elif cmd == 'next':
+                self.client.next()
+            elif cmd == 'decvol':
+                self.change_volume(-3)
+            elif cmd == 'incvol':
+                self.change_volume(3)
+            elif cmd == 'random':
+                rand = self.get_status_int('random')
+                self.client.random(1 if rand == 0 else 0)
+            elif cmd == 'repeat':
+                rep = self.get_status_int('repeat')
+                self.client.repeat(1 if rep == 0 else 0)
+            elif cmd == 'status':
+                pass  # success stays True
+            else:
+                success = False
+        except CommandError:
+            success = False
+        except ConnectionError:
+            success = False
+
+        data = self.get_status_data()
+        data['cmd'] = cmd
+        data['status'] = success
+        data['err_msg'] = err_msg
+        return data

@@ -8,9 +8,13 @@ $ ->
     PiRadio.ajax_setup()
 
 
-
-    # footer-items:
-    $('i.footer-button[data-item="pause"]').hide()
+    PiRadio.do_ajax
+        data:
+            'action': 'cmd'
+            'cmd': status
+        success: (data) ->
+            PiRadio.handle_status data
+            return
 
     $('i.footer-button').off 'click'
     $('i.footer-button').on 'click', ->
@@ -19,7 +23,7 @@ $ ->
                 'action': 'cmd'
                 'cmd': $(this)[0].dataset['item']
             success: (data) ->
-                console.log data
+                PiRadio.handle_status data
                 return
         return
 

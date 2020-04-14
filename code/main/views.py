@@ -5,6 +5,8 @@ from django.shortcuts import render
 
 from mpc.mpc import MPC
 
+import logging
+
 
 # Store MPC client instances per worker in global variable.
 # This is usually not recommended, but we know what we are doing.
@@ -44,6 +46,7 @@ def ensure_thread_mpc():
 
 
 def index(request):
+    logging.debug('INDEX')
     return render(request, 'main/index.pug', {})
 
 

@@ -1,12 +1,22 @@
+# docker-compose-debug.yml -- override for production debug/development on raspberry pi device
+# To use this override run
+#   docker-compose -f docker-compose.yml -f docker-compose-debug.yml up
+# Note: This override will take local changes in code base into account.
+
 version: "3.3"
 
 services:
 
     web:
         environment:
+            # This will cause CMD to run manage.py compress and manage.py collectstatic
+            # before starting uwsgi -- this is important for local changes in code base!
             - COLLECT=1
         volumes:
+            # Mount local code base into container.
+            # Note: normal docker-compose uses internal code base and won't see local changes!
             - ./code:/code
+            # Hand over collected static files to nginx.
             - static:/code/static
 
     nginx:

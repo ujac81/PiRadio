@@ -177,7 +177,8 @@ COMPRESS_FILTERS = {
          ],
     'js':
         ['compressor.filters.jsmin.JSMinFilter',
-         'compressor.filters.yuglify.YUglifyCSSFilter',
+         # Disabled yuglify because it removes non-optional semicolons.
+         # 'compressor.filters.yuglify.YUglifyCSSFilter',
          ],
 }
 
@@ -185,23 +186,22 @@ from pypugjs.ext.django.compiler import enable_pug_translations
 
 enable_pug_translations()
 
-if PRODUCTION:
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'console': {
-                'level': 'DEBUG',
-                'class': 'logging.StreamHandler',
-            },
-            'file': {
-                'level': 'WARNING',
-                'class': 'logging.FileHandler',
-                'filename': '/var/log/uwsgi/django-production.log',
-            },
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
         },
-        'root': {
-            'handlers': ['console', 'file'],
+        'file': {
             'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': '/var/log/uwsgi/django.log',
         },
-    }
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'WARNING' if PRODUCTION is True else 'DEBUG'
+    },
+}
