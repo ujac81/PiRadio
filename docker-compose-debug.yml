@@ -3,17 +3,15 @@ version: "3.3"
 services:
 
     web:
-        #environment:
-        #            - DEBUG=1
+        environment:
+            - COLLECT=1
         volumes:
+            - ./code:/code
             - static:/code/static
-        command: bash -c "cd /code && ./manage.py migrate && uwsgi --ini /etc/uwsgi/uwsgi.ini"
-        #       command: bash -c "cd /code && ./manage.py migrate && ./manage.py compress --extension=pug --force && ./manage.py collectstatic --no-input && uwsgi --ini /etc/uwsgi/uwsgi.ini"
 
     nginx:
         volumes:
             - static:/code/static
-
 
 volumes:
     static:

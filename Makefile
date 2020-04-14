@@ -24,7 +24,12 @@ save:
 deploy:
 	scp piradio.tgz pi@$(PI_HOST):~
 
+install-remote:
+	ssh pi@$(PI_HOST) docker load --input /home/pi/piradio.tgz
+
 
 load:
 	docker load --input ~/piradio.tgz
 	docker image prune -f
+
+full-deploy: image save deploy install-remote

@@ -190,17 +190,18 @@ if PRODUCTION:
         'version': 1,
         'disable_existing_loggers': False,
         'handlers': {
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+            },
             'file': {
-                'level': 'DEBUG' if DEBUG else 'ERROR',
+                'level': 'WARNING',
                 'class': 'logging.FileHandler',
-                'filename': '/var/log/uwsgi/django-{}.log'.format('debug' if DEBUG else 'production'),
+                'filename': '/var/log/uwsgi/django-production.log',
             },
         },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'DEBUG' if DEBUG else 'ERROR',
-                'propagate': True,
-            },
+        'root': {
+            'handlers': ['console', 'file'],
+            'level': 'WARNING',
         },
     }
