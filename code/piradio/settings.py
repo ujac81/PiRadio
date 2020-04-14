@@ -184,3 +184,23 @@ COMPRESS_FILTERS = {
 from pypugjs.ext.django.compiler import enable_pug_translations
 
 enable_pug_translations()
+
+if PRODUCTION:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'DEBUG' if DEBUG else 'ERROR',
+                'class': 'logging.FileHandler',
+                'filename': '/var/log/uwsgi/django-{}.log'.format('debug' if DEBUG else 'production'),
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': 'DEBUG' if DEBUG else 'ERROR',
+                'propagate': True,
+            },
+        },
+    }
