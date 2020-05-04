@@ -185,6 +185,7 @@ class MPC:
             data[key] = save_item(current, key)
         for key in ['elapsed', 'random', 'repeat', 'volume', 'state', 'playlist', 'playlistlength']:
             data[key] = status[key] if key in status else '0'
+        data['stream'] = data['file'].startswith('http://') or data['file'].startswith('https://')
         return data
 
     def cmd(self, data):

@@ -205,3 +205,6 @@ LOGGING = {
         'level': 'WARNING' if PRODUCTION is True else 'DEBUG'
     },
 }
+
+# Channels in .env file are like "Master; Channels" (set to match amixer channels)
+MIXER_CHANNELS = [x.strip() for x in os.environ.get('MIXER_CHANNELS').strip('"').strip("'").split(';')]

@@ -4,4 +4,7 @@ window.PiRadio = {}
 
 PiRadio.init_variables = ->
 
+
+    PiRadio.on_slider_change = false
+
     return

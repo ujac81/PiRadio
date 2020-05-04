@@ -41,13 +41,25 @@ html(lang="en")
                     a(href='/main')
                         i.fas.fa-home.text-light
                 .col.p-0.text-center
-                    i.fas.fa-play.text-light.footer-button(data-item='playpause', data-button='play')
-                    i.fas.fa-pause.text-light.footer-button(data-item='playpause', data-button='pause')
+                    i.fas.fa-play.play-button.text-light.mpc-button(data-item='playpause')
                 .col.p-0.text-center
-                    i.fas.fa-step-forward.text-light.footer-button(data-item='next')
+                    i.fas.fa-step-forward.text-light.mpc-button.next-button(data-item='next')
                 .col.p-0.text-center
-                    i.fas.fa-volume-down.text-light.footer-button(data-item='decvol')
+                    i.fas.fa-volume-mute.text-light.mute-button
                 .col.p-0.text-center
-                    i.fas.fa-volume-up.text-light.footer-button(data-item='incvol')
+                    i.fas.fa-volume-up.text-light.vol-button
+
+        .vol-over.bg-secondary
+            .container-fluid.h-100
+                .row.vol-head
+                    - for channel in mixers
+                        .col.text-center.p-3
+                            strong.vol-header #{channel}
+                .row.vol-sliders.pb-1
+                    - for channel in mixers
+                        .col.vol-slider-col.my-3
+                            .vol-slider.align-self-center(data-mixer='#{channel}')
+                                .vol-slider-fill(data-mixer='#{channel}').bg-primary
+
 
 

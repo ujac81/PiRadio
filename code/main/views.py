@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 from mpc.mpc import MPC
+from piradio.settings import *
 
 import logging
 
@@ -46,8 +47,8 @@ def ensure_thread_mpc():
 
 
 def index(request):
-    logging.debug('INDEX')
-    return render(request, 'main/index.pug', {})
+    context = dict(mixers=['Player'] + MIXER_CHANNELS)
+    return render(request, 'main/index.pug', context)
 
 
 def cmd_ajax(request):
@@ -56,8 +57,18 @@ def cmd_ajax(request):
     :return: JSON only -- use with ajax!
     """
     action = request.POST.get('action', None)
+    cmd = request.POST.get('cmd', None)
     if action == 'cmd':
         res = ensure_thread_mpc().cmd(request.POST.copy())
+    elif action == 'mixer':
+        res = dict()
+        if cmd == 'vol-status':
+            res['Player'] = int(ensure_thread_mpc().cmd(dict(cmd='status'))['volume'])
+        elif cmd == 'vol-set':
+            channel = request.POST.get('channel', None)
+            level = int(request.POST.get('value', 0))
+            if channel == 'Player':
+                ensure_thread_mpc().set_volume(level)
     else:
         res = dict(status=False, err_msg='Action not understood: '+action)
     return JsonResponse(res)

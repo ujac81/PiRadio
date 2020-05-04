@@ -1,21 +1,18 @@
 # base.coffee -- functions for base layout (footer)
 
 PiRadio.handle_status = (status) ->
-    if status.status
-        console.log 'TRUE'
-    else
-        console.log 'FALSE'
 
-    if status.status
-        if status.state == 'playing'
-            $('i.footer-button[data-button="play"]').hide()
-            $('i.footer-button[data-button="pause"]').show()
-        else
-            $('i.footer-button[data-button="pause"]').hide()
-            $('i.footer-button[data-button="play"]').show()
+    # remove the current class from play button
+    button = $('i.play-button')
+    button.removeClass (index, currentClass) ->
+        for item in currentClass.split(/\s+/)
+            if item.startsWith 'fa-'
+                console.log item
+                return item
+        return ''
+    if status.state == 'playing'
+        button.addClass 'fa-pause'
     else
-        $('i.footer-button[data-button="pause"]').hide()
-        $('i.footer-button[data-button="play"]').show()
-
+        button.addClass 'fa-play'
 
     return
