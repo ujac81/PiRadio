@@ -19,6 +19,7 @@ elif [ "x$COLLECT" = "x1" ]; then
     python3 manage.py migrate
     python3 manage.py compress --extension=pug --force
     python3 manage.py collectstatic --no-input
+    cp -a /code/static /static
     uwsgi --ini /etc/uwsgi/uwsgi.ini
     
 else
@@ -26,5 +27,6 @@ else
     cd /code
     echo "Starting in release mode...."
     python3 manage.py migrate && \
+    cp -a /code/static /static && \
     uwsgi --ini /etc/uwsgi/uwsgi.ini
 fi

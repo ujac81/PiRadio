@@ -43,6 +43,8 @@ services:
             - wwwsocket:/tmp/piradio
             # store log files externally
             - log:/var/log/uwsgi
+            # store static files externally
+            - static:/static
         working_dir: /code
         ports:
             # This is for debugging.
@@ -65,6 +67,7 @@ services:
             - "80:80"
         volumes:
             - wwwsocket:/tmp/piradio
+            - static:/static
         restart: unless-stopped
         
 volumes:
@@ -74,3 +77,4 @@ volumes:
     wwwsocket:
     # some error logs
     log:
+    # static files collected by django
