@@ -7,14 +7,14 @@ ENV PYTHON_PATH=/code
 RUN apk update && apk upgrade && \ 
     apk add bash mpc python3 python3-dev postgresql-dev alsa-utils npm gcc musl-dev linux-headers \
         python3-dev build-base linux-headers pcre-dev libc-dev musl memcached libmemcached-dev zlib-dev \
-        make libffi-dev libxslt-dev libxml2 libxml2-dev py3-lxml
+        make libffi-dev libxslt-dev libxml2 libxml2-dev py3-lxml rsync
         
 RUN mkdir /code
 WORKDIR /code
     
 COPY code/requirements.txt /code
 RUN npm install --global coffeescript sass yuglify
-RUN pip3 install --upgrade pip setuptools
+RUN pip3 install --upgrade pip setuptools wheel
 RUN pip3 install -r /code/requirements.txt
 
 ADD code /code

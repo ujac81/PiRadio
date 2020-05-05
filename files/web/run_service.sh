@@ -1,8 +1,5 @@
 #!/bin/bash
 
-
-
-
 if [ "x$DEBUG" = "x1" ]; then
 
     echo "Starting in DEBUG mode...."
@@ -19,14 +16,14 @@ elif [ "x$COLLECT" = "x1" ]; then
     python3 manage.py migrate
     python3 manage.py compress --extension=pug --force
     python3 manage.py collectstatic --no-input
-    cp -a /code/static /static
+    rsync -rptgo --delete --size-only /code/static/* /static
     uwsgi --ini /etc/uwsgi/uwsgi.ini
     
 else
 
     cd /code
     echo "Starting in release mode...."
-    python3 manage.py migrate && \
-    cp -a /code/static /static && \
+    python3 manage.py migrate
+    rsync -rptgo --delete --size-only /code/static/* /static
     uwsgi --ini /etc/uwsgi/uwsgi.ini
 fi
