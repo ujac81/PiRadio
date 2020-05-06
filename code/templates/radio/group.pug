@@ -1,0 +1,12 @@
+//- templates/radio/group.pug -- station selector
+
+
+extends 'base.pug'
+block content
+
+    .text-center.row.h-100.w-100
+        .col.align-self-center.p0
+            - for station in stations
+                .m-3.mt-0
+                    a.main.btgn.btn-lg.btn-primary(type="button", href="{% url 'radio-play' station.0 %}") #{station.1}
+

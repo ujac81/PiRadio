@@ -87,6 +87,7 @@ class MPC:
         for i in range(5):
             try:
                 res = self.client.status()
+                return res
             except (ConnectionError, CommandError, ProtocolError, BrokenPipeError, ValueError):
                 self.reconnect()
         res['error_str'] = self.error
@@ -230,3 +231,43 @@ class MPC:
         data['status'] = success
         data['err_msg'] = err_msg
         return data
+
+    def list_radio_groups(self):
+        """" List playlists as groups starting with 'Radio__GROUPNAME__'
+        :returns: [['Radio__Heavy_Metal', 'Heavy Metal'], ['Radio__Stations', 'Stations'], ...]
+        """
+        self.ensure_connected()
+        groups = list()
+        for x in self.client.listplaylists():
+            name = x['playlist']
+            if name.startswith('Radio__'):
+                path = '__'.join(name.split('__')[0:2])
+                groups.append(path)
+        return [[x, x.split('__')[1].replace('_', ' ')] for x in sorted(set(groups))]
+
+    def list_stations(self, prefix):
+        """ List playlists starting with 'RADIO__prefix__'
+
+        :param prefix: e.g. 'Radio__Stations__'
+        :return: [['Radio__Stations__wdr2', 'wdr2'], [....]]
+        """
+        self.ensure_connected()
+        m3us = list()
+        for x in self.client.listplaylists():
+            name = x['playlist']
+            if name.startswith(prefix+'__'):
+                m3us.append(name)
+        return [[x, x.split('__')[2].replace('_', ' ')] for x in sorted(set(m3us))]
+
+    def load_radio(self, path):
+        if self.get_status_data()['stream'] is not True:
+            # save current playlist as '__keep.m3u'
+            if len(self.client.playlist()) > 0:
+                try:
+                    self.client.rm('__keep')
+                except CommandError:
+                    pass
+                self.client.save('__keep')
+        self.client.clear()
+        self.client.load(path)
+        self.client.play()

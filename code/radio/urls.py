@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='radio-index'),
-#    path('ajax/cmd/', views.cmd_ajax, name='cmd_ajax'),
+    path('group/<slug:path>/', views.group, name='radio-group'),
+    path('play/<slug:path>/', views.play, name='radio-play'),
 ]
