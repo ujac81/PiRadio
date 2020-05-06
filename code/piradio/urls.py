@@ -19,6 +19,8 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/main')),
-    path('main/', include('main.urls')),
     path('admin/', admin.site.urls),
+    path('main/', include('main.urls')),
+    path('music/', include('music.urls')),
+    path('radio/', include('radio.urls')),
 ]

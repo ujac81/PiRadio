@@ -7,9 +7,9 @@ block content
     .text-center.row.h-100.w-100
         .col.align-self-center.p0
             .m-3.mt-0
-                a.main.btn.btn-lg.btn-primary(type="button", href='#') Radio
+                a.main.btn.btn-lg.btn-primary(type="button", href="{% url 'radio-index' %}") Radio
             .m-3
-                a.main.btn.btn-lg.btn-primary(type="button", href='#') Music
+                a.main.btn.btn-lg.btn-primary(type="button", href="{% url 'music-index' %}") Music
             .m-3.mb-5
                 a.main.btn.btn-lg.btn-danger(type="button", href='#') Power off
     
