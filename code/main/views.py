@@ -7,7 +7,8 @@ from piradio.settings import *
 
 
 def index(request, mpc):
-    return render(request, 'main/index.pug')
+    context = dict(marquee=mpc.marquee_text())
+    return render(request, 'main/index.pug', context)
 
 
 def cmd_ajax(request, mpc):

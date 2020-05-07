@@ -271,3 +271,11 @@ class MPC:
         self.client.clear()
         self.client.load(path)
         self.client.play()
+
+    def marquee_text(self):
+        status = self.get_status_data()
+        res = ''
+        if status['stream'] is True:
+            res = 'Radio stream: ' + status['file'] + ' -- '
+        res += save_artist_album_tile(status)
+        return res
