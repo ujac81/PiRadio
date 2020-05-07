@@ -7,10 +7,14 @@ block content
     .text-center.row.h-100.w-100
         .col.align-self-center.p0
             .m-3.mt-0
-                a.main.btn.btn-lg.btn-primary(type="button", href='#') Radio
+                a.music.btn.btn-lg.btn-secondary(type="button", href="{% url 'music-playlist' %}") Playlist
             .m-3
-                a.main.btn.btn-lg.btn-primary(type="button", href='#') Music
+                a.music.btn.btn-lg.btn-secondary(type="button", href="{% url 'music-browse' %}") Browse Files
+            .m-3
+                a.music.btn.btn-lg.btn-secondary(type="button", href="{% url 'music-search' %}") Search Files
+            .m-3
+                a.music.btn.btn-lg.btn-secondary(type="button", href="{% url 'music-smart' %}") Smart Playlists
             .m-3.mb-5
-                a.main.btn.btn-lg.btn-danger(type="button", href='#') Power off
+                a.music.btn.btn-lg.btn-secondary(type="button", href="{% url 'music-playlists' %}") Manage Playlists
 
 
