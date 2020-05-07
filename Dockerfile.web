@@ -12,9 +12,9 @@ RUN apk update && apk upgrade && \
 RUN mkdir /code
 WORKDIR /code
     
-COPY code/requirements.txt /code
 RUN npm install --global coffeescript sass yuglify
 RUN pip3 install --upgrade pip setuptools wheel
+COPY code/requirements.txt /code
 RUN pip3 install -r /code/requirements.txt
 
 ADD code /code

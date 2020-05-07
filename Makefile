@@ -37,7 +37,7 @@ full-deploy: image save deploy install-remote
 
 web-deploy:
 	docker build --force-rm --rm --tag piradio_web --file Dockerfile.web --target web .
-	docker image save --output piradio.tgz piradio_web piradio_nginx
+	docker image save --output piradio.tgz piradio_web
 	scp piradio.tgz pi@$(PI_HOST):~
 	ssh pi@$(PI_HOST) docker load --input /home/pi/piradio.tgz
 	rm -f piradio.tgz

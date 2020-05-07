@@ -9,7 +9,8 @@ def index(request, mpc):
 
 
 def group(request, path, mpc):
-    context = dict(stations=mpc.list_stations(path))
+    gname = path.split('__')[1].replace('_', ' ')
+    context = dict(stations=mpc.list_stations(path), group=gname)
     return render(request, 'radio/group.pug', context)
 
 

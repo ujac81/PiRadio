@@ -4,9 +4,15 @@
 extends 'base.pug'
 block content
 
-    .text-center.row.h-100.w-100
-        .col.align-self-center.p0
-            - for station in stations
-                .m-3.mt-0
-                    a.main.btgn.btn-lg.btn-primary(type="button", href="{% url 'radio-play' station.0 %}") #{station.1}
-
+    h3.heading.bg-dark.p-3
+        a.text-light(href="{% url 'radio-index' %}")
+            em #{group}
+            |
+            | stations
+    .table-content
+        table.table.table-striped.tb-radio
+            tbody
+                - for station in stations
+                    tr
+                        td.p-3
+                            a(href="{% url 'radio-play' station.0 %}") #{station.1}

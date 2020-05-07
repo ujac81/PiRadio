@@ -4,8 +4,12 @@
 extends 'base.pug'
 block content
 
-    .text-center.row.h-100.w-100
-        .col.align-self-center.p0
-            - for group in groups
-                .m-3.mt-0
-                    a.main.btgn.btn-lg.btn-primary(type="button", href="{% url 'radio-group' group.0 %}") #{group.1}
+    h3.heading.bg-dark.text-light.p-3 Radio Groups
+    .table-content
+        table.table.table-striped.tb-radio
+            tbody
+                - for group in groups
+                    tr
+                        td.p-3
+                            a(href="{% url 'radio-group' group.0 %}") #{group.1}
+

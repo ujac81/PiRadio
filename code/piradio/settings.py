@@ -102,7 +102,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'NAME': ':memory:',
         }
     }
 
@@ -172,6 +172,13 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'sass --scss {infile} {outfile}'),
     ('text/stylus', 'stylus < {infile} > {outfile}'),
     ('text/foobar', 'path.to.MyPrecompilerFilter'),
+)
+
+COMPRESS_CACHEABLE_PRECOMPILERS = (
+    'text/coffeescript',
+    # THIS is dangerous, if @import is used in sass files!
+    # However, development is faster, because reload is much faster.
+    'text/x-sass',
 )
 
 COMPRESS_FILTERS = {
