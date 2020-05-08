@@ -4,5 +4,25 @@
 extends 'base.pug'
 block content
 
-    a(href="{% url 'music-index' %}")
-        h3.heading.bg-dark.text-light.p-3 Playlist
+    .link-cell
+        a(href="{% url 'music-index' %}")
+            h3.heading.bg-dark.text-light.p-3 Playlist
+
+    .table-content
+        table.tb-playlist
+            tbody
+                - for item in pl
+                    tr.plmain.selectable(data-id="0")
+                        td.p-0.plouter
+                            table.plsub
+                                tr.plsub
+                                    td.plindex(rowspan=2) #{item.0}
+                                    td.pltitle #{item.2}
+                                    td.pltime #{item.3}
+                                    td.plaction(rowspan=2)
+                                        i.fas.fa-ellipsis-v
+                                tr.plsub
+                                    td.plalbum(colspan=2) #{item.4}
+
+
+

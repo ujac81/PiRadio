@@ -63,8 +63,6 @@ $ ->
         pct = parseInt(100.0-pct_inv)
         id = $(this).data('mixer')
 
-        console.log pct, id
-
         PiRadio.do_ajax
             data:
                 'action': 'mixer'
@@ -76,10 +74,6 @@ $ ->
                 PiRadio.on_slider_change = false
                 return
         return
-
-
-
-    console.log('Ready')
 
     return
 

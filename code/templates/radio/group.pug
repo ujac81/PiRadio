@@ -14,5 +14,5 @@ block content
             tbody
                 - for station in stations
                     tr
-                        td.p-3
+                        td.p-3.link-cell
                             a(href="{% url 'radio-play' station.0 %}") #{station.1}

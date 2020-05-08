@@ -1,4 +1,5 @@
 
+$small-font-size: 2rem
 $normal-font-size: 3rem
 $large-font-size: 5rem
 
@@ -16,7 +17,7 @@ a.music
     
     
 .footer 
-    position: absolute
+    position: fixed
     bottom: 0
     width: 100%
     height: 9rem
@@ -99,4 +100,71 @@ strong.vol-header
 
 
 h3.heading
+    width: 100%
+    position: fixed
+    top: 0
     font-size: $large-font-size
+
+.link-cell
+    a
+        width: 100%
+        height: 100%
+        display: block
+
+
+.table-content
+    padding-top: 10rem
+    padding-bottom: 10rem
+
+table.tb-playlist
+    font-size: $normal-font-size
+    tr.plmain:nth-of-type(odd)
+            background-color: rgba(0, 0, 0, 0.05)
+    tr.plmain
+        td.plouter
+            border-top: 2px solid #ccc
+
+table.plsub
+    max-width: 100%
+    width: 100%
+    background-color: transparent
+
+    tbody
+        background-color: transparent
+
+tr.plsub
+    background-color: transparent
+    td
+        padding: 5px
+    td.plindex
+        border-right: 2px solid #999
+        vertical-align: top
+        text-align: right
+        width: 4ch
+
+    td.pltitle
+        text-align: left
+        vertical-align: top
+        max-width: 100%
+
+    td.pltime
+        text-align: right
+        vertical-align: top
+        width: 6ch
+
+    td.plaction
+        text-align: center
+        vertical-align: middle
+        font-size: $normal-font-size
+        width: 3ch
+
+    td.plalbum
+        color: #777
+        font-size: $small-font-size
+        vertical-align: top
+        text-align: center
+        max-width: 100%
+
+
+tr.selectable
+    max-width: 100%

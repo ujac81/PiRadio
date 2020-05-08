@@ -10,6 +10,6 @@ block content
             tbody
                 - for group in groups
                     tr
-                        td.p-3
+                        td.p-3.link-cell
                             a(href="{% url 'radio-group' group.0 %}") #{group.1}
 

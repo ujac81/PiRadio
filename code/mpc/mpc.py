@@ -157,8 +157,7 @@ class MPC:
         current = self.get_currentsong()
         return self.generate_status_data(status, current)
 
-    @staticmethod
-    def generate_status_data(status, current):
+    def generate_status_data(self, status, current):
         """Combined currentsong / status data
 
         :return: {title: xxx
@@ -187,6 +186,7 @@ class MPC:
         for key in ['elapsed', 'random', 'repeat', 'volume', 'state', 'playlist', 'playlistlength']:
             data[key] = status[key] if key in status else '0'
         data['stream'] = data['file'].startswith('http://') or data['file'].startswith('https://')
+        data['marquee'] = self.marquee_text(data)
         return data
 
     def cmd(self, data):
@@ -272,10 +272,53 @@ class MPC:
         self.client.load(path)
         self.client.play()
 
-    def marquee_text(self):
-        status = self.get_status_data()
+    def marquee_text(self, status=None):
+        if status is None:
+            status = self.get_status_data()
         res = ''
         if status['stream'] is True:
             res = 'Radio stream: ' + status['file'] + ' -- '
         res += save_artist_album_tile(status)
         return res
+
+    def browse(self, path=None):
+        """Browse MPD database for path
+        :param path: a path name relative to MPD root
+        :return: [DIR-ITEMS, FILE-ITEMS]
+        """
+        dirs = list()
+        files = list()
+        self.ensure_connected()
+
+        if path is None:
+            return dirs, files
+
+        try:
+            lsdir = self.client.lsinfo(path)
+        except CommandError:
+            return dirs, files
+
+        for item in lsdir:
+            if 'directory' in item:
+                title = os.path.basename(item['directory'])
+                dirs.append([title, item['directory']])
+
+        return dirs, files
+
+    def playlistinfo(self):
+        """Display current playlist"""
+        self.ensure_connected()
+        items = self.client.playlistinfo()
+
+        data = []
+        for item in items:
+            res = list([str(int(item['pos'])+1), item['id']])
+            res.append(save_title(item))
+            length = time.strftime("%M:%S", time.gmtime(int(item['time'])))
+            res.append(length)
+            res.append(save_item(item, 'artist') + ' - ' + save_item(item, 'album'))
+            data.append(res)
+
+        return data
+
+

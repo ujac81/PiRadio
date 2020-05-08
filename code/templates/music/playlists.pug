@@ -4,5 +4,6 @@
 extends 'base.pug'
 block content
 
-    a(href="{% url 'music-index' %}")
-        h3.heading.bg-dark.text-light.p-3 Manage Playlists
+    .link-cell
+        a(href="{% url 'music-index' %}")
+            h3.heading.bg-dark.text-light.p-3 Manage Playlists

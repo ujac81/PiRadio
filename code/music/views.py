@@ -1,5 +1,7 @@
 # music/views.py
 
+import logging
+
 from django.shortcuts import render
 
 
@@ -12,7 +14,8 @@ def browse(request, mpc):
 
 
 def playlist(request, mpc):
-    return render(request, 'music/playlist.pug')
+    context = dict(pl=mpc.playlistinfo())
+    return render(request, 'music/playlist.pug', context)
 
 
 def playlists(request, mpc):

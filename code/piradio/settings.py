@@ -27,7 +27,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -84,8 +84,9 @@ WSGI_APPLICATION = 'piradio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# Database
-if 'POSTGRES_DB' in os.environ:
+# Database -- DISABLED! we don't need one a.t.m., so "and False" added.
+# If re-enable wanted, don't forget to change docker-compose.yml
+if 'POSTGRES_DB' in os.environ and False:
     # running via docker-compose
     DATABASES = {
         'default': {

@@ -5,9 +5,10 @@ FROM arm32v6/alpine:3.11.5 AS web
 ENV LC_ALL=en_US.UTF-8
 ENV PYTHON_PATH=/code
 RUN apk update && apk upgrade && \ 
-    apk add bash mpc python3 python3-dev postgresql-dev alsa-utils npm gcc musl-dev linux-headers \
+    apk add bash mpc python3 python3-dev  alsa-utils npm gcc musl-dev linux-headers \
         python3-dev build-base linux-headers pcre-dev libc-dev musl memcached libmemcached-dev zlib-dev \
         make libffi-dev libxslt-dev libxml2 libxml2-dev py3-lxml rsync
+# postgresql-dev
         
 RUN mkdir /code
 WORKDIR /code

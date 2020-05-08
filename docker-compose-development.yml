@@ -6,10 +6,10 @@ services:
         volumes:
             - /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static
         
-    db:
-        volumes:
-            - dbdata:/var/lib/postgresql/data
-            - /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static
+#    db:
+#        volumes:
+#            - dbdata:/var/lib/postgresql/data
+#            - /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static
            
     web:
         image: piradio_web
