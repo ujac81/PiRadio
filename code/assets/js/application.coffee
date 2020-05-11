@@ -10,7 +10,6 @@ $ ->
     # hide volume overlay
     $('.vol-over').hide()
 
-
     # Load initial status
     PiRadio.do_ajax
         data:
@@ -74,6 +73,12 @@ $ ->
                 PiRadio.on_slider_change = false
                 return
         return
+
+
+    # invoke view-specific functions
+    view_name = $("body").data("urlname")
+    if view_name of PiRadio.view_functions
+        PiRadio.view_functions[view_name]()
 
     return
 

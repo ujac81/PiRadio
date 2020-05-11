@@ -2,8 +2,9 @@
 
 window.PiRadio = {}
 
-PiRadio.init_variables = ->
+PiRadio.view_functions = {}
 
+PiRadio.init_variables = ->
 
     PiRadio.on_slider_change = false
 

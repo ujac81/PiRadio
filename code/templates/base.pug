@@ -27,10 +27,11 @@ html(lang="en")
         script(type='text/coffeescript', charset='utf-8', src="{% static 'js/global.coffee' %}")
         script(type='text/coffeescript', charset='utf-8', src="{% static 'js/ajax.coffee' %}")
         script(type='text/coffeescript', charset='utf-8', src="{% static 'js/base.coffee' %}")
+        script(type='text/coffeescript', charset='utf-8', src="{% static 'js/playlist.coffee' %}")
         //- PiRadio sources: load application last, contains document.ready function
         script(type='text/coffeescript', charset='utf-8', src="{% static 'js/application.coffee' %}")
         - endcompress
-    body.base
+    body.base(data-urlname="#{url_name}")
         - csrf_token
         block content
         
