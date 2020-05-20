@@ -1,4 +1,4 @@
 # Vendored files and directories are excluded from language statistics.
+code/assets/vendor/* linguist-vendored
 
-- code/assets/vendor/
 
