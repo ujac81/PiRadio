@@ -8,4 +8,6 @@ PiRadio.init_variables = ->
 
     PiRadio.on_slider_change = false
 
+    PiRadio.action_item = -1
+
     return

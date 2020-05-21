@@ -119,10 +119,16 @@ h3.heading
 table.tb-playlist
     font-size: $normal-font-size
     tr.plmain:nth-of-type(odd)
-            background-color: rgba(0, 0, 0, 0.05)
+        background-color: rgba(0, 0, 0, 0.05)
+    tr.plmain.selected:nth-of-type(odd)
+        background-color: blue
+        color: white
     tr.plmain
         td.plouter
             border-top: 2px solid #ccc
+    tr.plmain.selected
+        background-color: blue
+        color: white
 
 table.plsub
     max-width: 100%
@@ -172,3 +178,36 @@ tr.selectable
 tr.selected
     background-color: blue
     color: white
+
+.top-sign
+    z-index: 10
+    position: fixed
+    top: 2rem
+    i
+        font-size: 6rem
+
+.minus-sign
+    right: 10rem
+
+.plus-sign
+    right: 2rem
+
+
+.modal-header
+    h5
+        font-size: $large-font-size
+    button
+        span
+            font-size: $large-font-size
+
+.modal-body
+    button
+        font-size: $normal-font-size
+
+
+body.modal-open > :not(.modal)
+    -webkit-filter: blur(5px)
+    -moz-filter: blur(5px)
+    -o-filter: blur(5px)
+    -ms-filter: blur(5px)
+    filter: blur(5px)

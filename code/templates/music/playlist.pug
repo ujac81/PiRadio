@@ -8,6 +8,12 @@ block content
         a(href="{% url 'music-index' %}")
             h3.heading.bg-dark.text-light.p-3 Playlist
 
+    button.raise-modal.btn.top-sign.minus-sign(data-toggle='modal', data-target='#minusmodal')
+        i.fas.fa-minus-circle#pl-minus.text-danger
+
+    button.raise-modal.btn.top-sign.plus-sign(data-toggle='modal', data-target='#addmodal')
+        i.fas.fa-plus-circle#pl-plus.text-success
+
     .table-content
         table.tb-playlist
             tbody
@@ -16,13 +22,62 @@ block content
                         td.p-0.plouter
                             table.plsub
                                 tr.plsub
-                                    td.plindex(rowspan=2) #{item.0}
+                                    td.plindex(rowspan=2, data-toggle='modal', data-target='#itemmodal') #{item.0}
                                     td.pltitle.selectable #{item.2}
                                     td.pltime.selectable #{item.3}
-                                    td.plaction(rowspan=2)
+                                    td.plaction(rowspan=2, data-toggle='modal', data-target='#actionmodal')
                                         i.fas.fa-ellipsis-v
                                 tr.plsub
                                     td.plalbum.selectable(colspan=2) #{item.4}
+
+    .modal.modal-fade#addmodal(tabindex='-1', role='dialog' )
+        .modal-dialog.modal-dialog-centered.modal-dialog-scrollable.mw-100.w-75
+            .modal-content
+                .modal-header
+                    h5.modal-title Add Items
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden="true") ×
+                .modal-body
+                    p Hallo hallo
+
+    .modal.modal-fade#minusmodal(tabindex='-1', role='dialog' )
+        .modal-dialog.modal-dialog-centered.modal-dialog-scrollable.mw-100.w-75
+            .modal-content
+                .modal-header
+                    h5.modal-title Remove Items
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden="true") ×
+                .modal-body.p-3
+                    button.p-1.btn.btn-secondary.btn-block(type='button', data-action='plcmd', data-cmd='del-remitems') Remove selected
+                    p
+                    button.p-1.btn.btn-secondary.btn-block(type='button', data-action='plcmd', data-cmd='del-remitems') Clear Playlist
+
+    .modal.modal-fade#actionmodal(tabindex='-1', role='dialog' )
+        .modal-dialog.modal-dialog-centered.modal-dialog-scrollable.mw-100.w-75
+            .modal-content
+                .modal-header
+                    h5.modal-title Item Actions
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden="true") ×
+                .modal-body.p3
+                    p Hallo hallo
+
+    .modal.modal-fade#itemmodal(tabindex='-1', role='dialog')
+        .modal-dialog.modal-dialog-centered.modal-dialog-scrollable.mw-100.w-75
+            .modal-content
+                .modal-header
+                    h5.modal-title Item Info
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden="true") ×
+                .modal-body
+                    p Hallo hallo
+
+
+
+
+
+
+
 
 
 

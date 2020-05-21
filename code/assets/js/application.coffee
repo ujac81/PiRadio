@@ -80,6 +80,20 @@ $ ->
     if view_name of PiRadio.view_functions
         PiRadio.view_functions[view_name]()
 
+
+#     # hide any modals if x is clicked
+#     $("button.close[data-dismiss='modal']").on 'click', ->
+#         setTimeout (->
+#             $(".modal").hide()
+#             return
+#         ), 500
+#         return
+#
+#     $(".raise-modal").on 'click', ->
+#         $('.modal#'+$(this).data('target')).show()
+#         return
+
+
     return
 
 
