@@ -1,6 +1,6 @@
  
 
-django==3.0.6
+django==3.0.14
 
 # pug HTML5 templates
 pypugjs==5.9.1
